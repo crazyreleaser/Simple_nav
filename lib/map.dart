@@ -102,7 +102,7 @@ class _CenterFabExampleState extends State<CenterFabExample> {
                 accuracyCircleColor: Colors.green.withOpacity(0.1),
                 headingSectorColor: Colors.green.withOpacity(0.5),
                 headingSectorRadius: 120,
-                markerAnimationDuration: Duration.zero, // disable animation
+                // markerAnimationDuration: Duration(milliseconds: 100), // disable animation
               ),
             ),
             Positioned(
@@ -157,11 +157,7 @@ class _CenterFabExampleState extends State<CenterFabExample> {
                 top: 10,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Input(
-                    myVoidCallBack: () {
-                      print('myVoidCallBack');
-                    }
-                  ),
+                  child: Input(),
                 ),
             ),
           ],
