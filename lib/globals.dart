@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:simple_nav/DB.dart';
+// import 'package:simple_nav/DB.dart';
 
 class GlobalData {
   static bool isDataLoaded = false;
-  static database db = database();
-  static final lastCoords = <double>[]; // always 0 -lat, 1 - lng
+  // static database db = database();
+  // static final lastCoords = <double>[]; // always 0 -lat, 1 - lng
   static double? lastLat;
   static double? lastLng;
   static double myLat = 0;
