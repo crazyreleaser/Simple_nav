@@ -71,7 +71,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           padding: const EdgeInsets.all(8.0),
           child: Input(),
         ),
-        Compass(),
+        // Compass(),
       ],
     ),
     CenterFabExample(),

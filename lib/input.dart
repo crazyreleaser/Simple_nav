@@ -40,7 +40,7 @@ class _InputState extends State<Input> {
   }
   void _validateInput() {
     // print('text field: ${_myController.text}');
-    var text = _myController.text.split(', ');
+    var text = _myController.text.replaceAll(' ', '').split(',');
     if (text.length != 2) {
       print("input is not formatted");
       return;
@@ -51,10 +51,23 @@ class _InputState extends State<Input> {
       print("second part is not formatted");
       return;
     };
+    // var lattmp = text[0].split('-');
+    // var lngtmp = text[1].split('-');
+    // if (lattmp.length > 1) {
+    //   print('first part is not formated1 '+ lattmp.toString()+' '+lattmp.length.toString());
+    //   return;
+    // } else if (lattmp[0].length > 0) {
+    //   print('first part is not formated2 '+ lattmp[0].toString()+' '+lattmp[0].length.toString());
+    //   return;
+    // };
     double lat = double.parse(text[0]);
     double lng = double.parse(text[1]);
     // var inputCoords = new coords(lat: lat.toString(), lng: lng.toString());
     // GlobalData.db.saveCoords(inputCoords);
+    if (lng > 180 || lng < -180 || lat > 180 || lat < -180){
+      print('invalid coords');
+      return;
+    }
     GlobalData.lastLat = lat;
     GlobalData.lastLng = lng;
     print('Valid coords: ' + lat.toString() +' '+ lng.toString());
@@ -83,7 +96,7 @@ class _InputState extends State<Input> {
       maxLength: 22,
       cursorWidth: 5.0,
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp('[0-9,. ]')),
+        FilteringTextInputFormatter.allow(RegExp('[0-9,. -]')),
       ],
       decoration: InputDecoration(
         hintText: "55.754024, 37.620381",
