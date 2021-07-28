@@ -5,7 +5,7 @@ class GlobalData {
   static bool isDataLoaded = false;
   // static database db = database();
   // static final lastCoords = <double>[]; // always 0 -lat, 1 - lng
-  static double heading = 0;
+  static double directionToEnd = 0;
   static double? lastLat;
   static double? lastLng;
   static double myLat = 0;

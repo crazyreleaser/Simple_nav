@@ -55,7 +55,7 @@ class _CenterFabExampleState extends State<CenterFabExample> {
     GlobalData.myLng = data.longitude;
   });
   void _onHeading(double data) => setState(() {
-    print('outside map heading: '+data.toString());
+    // print('outside map heading: '+data.toString());
     _headingToNorth = -data;
     if (_headingToNorth < 0) _headingToNorth = _headingToNorth + 360;
     // LatLng _startCoords = LatLng(0, 0);
@@ -63,14 +63,15 @@ class _CenterFabExampleState extends State<CenterFabExample> {
     LatLng _startCoords = geodesy.LatLng(GlobalData.myLat, GlobalData.myLng);
     LatLng _endCoords = geodesy.LatLng(GlobalData.lastLat, GlobalData.lastLng);
     num bearing = _geodesy.bearingBetweenTwoGeoPoints(_startCoords, _endCoords);
-    print("[bearingBetweenTwoGeoPoints] Bearing: " + bearing.toString());
+    // print("[bearingBetweenTwoGeoPoints] Bearing: " + bearing.toString());
     // double? direction = snapshot.data!.heading;
     // double? direction = 90;
     // direction = _heading;
-    print('direction to north: ' + _headingToNorth.toString());
+    // print('direction to north: ' + _headingToNorth.toString());
     _directionToEnd = _headingToNorth + bearing;
     if(_directionToEnd >= 360) _directionToEnd = _directionToEnd - 360;
-    print('Direction to end point: ' + _directionToEnd.toString()+'\n');
+    // print('Direction to end point: ' + _directionToEnd.toString()+'\n');
+    GlobalData.directionToEnd = _directionToEnd;
   });
 
   @override
