@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-// import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:geodesy/geodesy.dart';
 import 'package:simple_nav/flutter_map_location_marker_my/flutter_map_location_marker_my.dart';
 import 'package:latlong2/latlong.dart' as latlong;
 import 'package:simple_nav/globals.dart';
@@ -26,18 +24,20 @@ class _CenterFabExampleState extends State<CenterFabExample> {
 
   double _headingToNorth = 0;
   double _directionToEnd = 0;
-  Geodesy _geodesy = geodesy.Geodesy();
+  geodesy.Geodesy _geodesy = geodesy.Geodesy();
   double _zoom = 10;
   static double _minZoom = 0;
   static double _maxZoom = 19;
   void _incrementZoom() {
     if (_zoom < _maxZoom) {
       _zoom++;
+      _zoomLevelStreamController.add(_zoom);
     }
   }
   void _decrementZoom() {
     if (_zoom > _minZoom) {
       _zoom--;
+      _zoomLevelStreamController.add(_zoom);
     }
   }
   @override
@@ -52,27 +52,17 @@ class _CenterFabExampleState extends State<CenterFabExample> {
     _myPositionStreamController.stream.listen(_onMyPosition);
   }
   void _onMyPosition(latlong.LatLng data) => setState(() {
-    // print('\n\n--- StreamController My Position: '+data.latitude.toString() +' '+data.longitude.toString());
     GlobalData.myLat = data.latitude;
     GlobalData.myLng = data.longitude;
   });
   void _onHeading(double data) => setState(() {
-    // print('outside map heading: '+data.toString());
     _headingToNorth = -data;
     if (_headingToNorth < 0) _headingToNorth = _headingToNorth + 360;
-    // LatLng _startCoords = LatLng(0, 0);
-    // LatLng _endCoords = LatLng(90, 0);
-    LatLng _startCoords = geodesy.LatLng(GlobalData.myLat, GlobalData.myLng);
-    LatLng _endCoords = geodesy.LatLng(GlobalData.lastLat, GlobalData.lastLng);
+    geodesy.LatLng _startCoords = geodesy.LatLng(GlobalData.myLat, GlobalData.myLng);
+    geodesy.LatLng _endCoords = geodesy.LatLng(GlobalData.lastLat, GlobalData.lastLng);
     num bearing = _geodesy.bearingBetweenTwoGeoPoints(_startCoords, _endCoords);
-    // print("[bearingBetweenTwoGeoPoints] Bearing: " + bearing.toString());
-    // double? direction = snapshot.data!.heading;
-    // double? direction = 90;
-    // direction = _heading;
-    // print('direction to north: ' + _headingToNorth.toString());
     _directionToEnd = _headingToNorth + bearing;
     if(_directionToEnd >= 360) _directionToEnd = _directionToEnd - 360;
-    // print('Direction to end point: ' + _directionToEnd.toString()+'\n');
     GlobalData.directionToEnd = _directionToEnd;
   });
 
@@ -83,7 +73,6 @@ class _CenterFabExampleState extends State<CenterFabExample> {
     _headingStreamController.close();
     _myPositionStreamController.close();
     super.dispose();
-    print("dispose map");
   }
 
   @override
@@ -98,9 +87,6 @@ class _CenterFabExampleState extends State<CenterFabExample> {
               interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
               // Stop centering the location marker on the map if user interacted with the map.
               onPositionChanged: (MapPosition position, bool hasGesture) {
-                // print("Center map position: " + position.center!.latitude.toString());
-                // GlobalData.myLat = position.center!.latitude;
-                // GlobalData.myLng = position.center!.longitude;
                 if (hasGesture) {
                   setState(() => _centerOnLocationUpdate = CenterOnLocationUpdate.never);
                 }
@@ -150,7 +136,7 @@ class _CenterFabExampleState extends State<CenterFabExample> {
                 accuracyCircleColor: Colors.green.withOpacity(0.1),
                 headingSectorColor: Colors.green.withOpacity(0.5),
                 headingSectorRadius: 120,
-                // markerAnimationDuration: Duration(milliseconds: 100), // disable animation
+                markerAnimationDuration: Duration(milliseconds: 100), // disable animation
               ),
             ),
             Positioned(
@@ -159,7 +145,6 @@ class _CenterFabExampleState extends State<CenterFabExample> {
               child: FloatingActionButton(
                 onPressed: () {
                   _incrementZoom();
-                  _zoomLevelStreamController.add(_zoom);
                 },
                 child: Icon(
                   Icons.add,
@@ -174,7 +159,6 @@ class _CenterFabExampleState extends State<CenterFabExample> {
               child: FloatingActionButton(
                 onPressed: () {
                   _decrementZoom();
-                  _zoomLevelStreamController.add(_zoom);
                 },
                 child: Icon(
                   Icons.remove,
@@ -200,7 +184,6 @@ class _CenterFabExampleState extends State<CenterFabExample> {
               ),
             ),
             Positioned(
-                // width: MediaQuery.of(context).size.width * 0.9,
                 left: MediaQuery.of(context).size.width * 0.05,
                 right: MediaQuery.of(context).size.width * 0.05,
                 top: 10,
