@@ -61,28 +61,28 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       print('Load last Coords: ' + GlobalData.lastLat.toString()+' '+ GlobalData.lastLng.toString());
     });
   }
-  static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  List<Widget> _widgetOptions = <Widget>[
-    Wrap(
-      spacing: 8.0, // gap between adjacent chips
-      runSpacing: 4.0, // gap between lines
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Input(),
-        ),
-        // Compass(),
-      ],
-    ),
-    CenterFabExample(),
-    // TapboxA(),
-  ];
+  // static const TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  // List<Widget> _widgetOptions = <Widget>[
+  //   Wrap(
+  //     spacing: 8.0, // gap between adjacent chips
+  //     runSpacing: 4.0, // gap between lines
+  //     children: <Widget>[
+  //       Padding(
+  //         padding: const EdgeInsets.all(8.0),
+  //         child: Input(),
+  //       ),
+  //       Compass(),
+  //     ],
+  //   ),
+  //   CenterFabExample(),
+  //   // TapboxA(),
+  // ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -92,26 +92,27 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           title: const Text('Simple Navigator'),
         ),
         body: Center(
-          child: IndexedStack(
-              index:_selectedIndex,
-              children:_widgetOptions
-          ),
+          child: CenterFabExample(),
+          // child: IndexedStack(
+          //     index:_selectedIndex,
+          //     children:_widgetOptions
+          // ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              label: 'Business',
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber[800],
-          onTap: _onItemTapped,
-        ),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   items: const <BottomNavigationBarItem>[
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.home),
+        //       label: 'Home',
+        //     ),
+        //     BottomNavigationBarItem(
+        //       icon: Icon(Icons.business),
+        //       label: 'Business',
+        //     ),
+        //   ],
+        //   currentIndex: _selectedIndex,
+        //   selectedItemColor: Colors.amber[800],
+        //   onTap: _onItemTapped,
+        // ),
       );
     } else {
       return Center(

@@ -20,6 +20,7 @@ class CenterFabExample extends StatefulWidget {
 class _CenterFabExampleState extends State<CenterFabExample> {
   late CenterOnLocationUpdate _centerOnLocationUpdate;
   late StreamController<double> _centerCurrentLocationStreamController;
+  late StreamController<double> _zoomLevelStreamController;
   late StreamController<double> _headingStreamController;
   late StreamController<latlong.LatLng> _myPositionStreamController;
 
@@ -44,6 +45,7 @@ class _CenterFabExampleState extends State<CenterFabExample> {
     super.initState();
     _centerOnLocationUpdate = CenterOnLocationUpdate.always;
     _centerCurrentLocationStreamController = StreamController<double>();
+    _zoomLevelStreamController = StreamController<double>();
     _headingStreamController = StreamController<double>();
     _headingStreamController.stream.listen(_onHeading);
     _myPositionStreamController = StreamController<latlong.LatLng>();
@@ -77,6 +79,7 @@ class _CenterFabExampleState extends State<CenterFabExample> {
   @override
   void dispose() {
     _centerCurrentLocationStreamController.close();
+    _zoomLevelStreamController.close();
     _headingStreamController.close();
     _myPositionStreamController.close();
     super.dispose();
@@ -132,6 +135,7 @@ class _CenterFabExampleState extends State<CenterFabExample> {
                 headingStreamController: _headingStreamController,
                 myPositionStreamController: _myPositionStreamController,
                 centerCurrentLocationStream: _centerCurrentLocationStreamController.stream,
+                zoomLevelStream: _zoomLevelStreamController.stream,
                 centerOnLocationUpdate: _centerOnLocationUpdate,
               ),
               options: LocationMarkerLayerOptions(
@@ -155,7 +159,7 @@ class _CenterFabExampleState extends State<CenterFabExample> {
               child: FloatingActionButton(
                 onPressed: () {
                   _incrementZoom();
-                  _centerCurrentLocationStreamController.add(_zoom);
+                  _zoomLevelStreamController.add(_zoom);
                 },
                 child: Icon(
                   Icons.add,
@@ -170,7 +174,7 @@ class _CenterFabExampleState extends State<CenterFabExample> {
               child: FloatingActionButton(
                 onPressed: () {
                   _decrementZoom();
-                  _centerCurrentLocationStreamController.add(_zoom);
+                  _zoomLevelStreamController.add(_zoom);
                 },
                 child: Icon(
                   Icons.remove,
@@ -206,7 +210,7 @@ class _CenterFabExampleState extends State<CenterFabExample> {
                 ),
             ),
             Positioned(
-              width: 250,
+              width: 220,
               left: 10,
               bottom: 10,
               child: Padding(
@@ -217,7 +221,7 @@ class _CenterFabExampleState extends State<CenterFabExample> {
                   child: Icon(
                     Icons.trending_flat,
                     color: Colors.red,
-                    size: 140,
+                    size: 200,
                   ),
                 ),
               ),

@@ -25,9 +25,9 @@ class _CompassState extends State<Compass> with SingleTickerProviderStateMixin{
   void initState() {
     super.initState();
     _fetchPermissionStatus();
-    FlutterCompass.events!.listen(_onData);
+    // FlutterCompass.events!.listen(_onData);
   }
-  void _onData(CompassEvent data) => setState(() { _heading = data.heading!; print(data.heading!.toString());});
+  // void _onData(CompassEvent data) => setState(() { _heading = data.heading!; print(data.heading!.toString());});
   final TextStyle _style = TextStyle(
     color: Colors.red[50]!.withOpacity(0.9),
     fontSize: 32,
@@ -61,7 +61,8 @@ class _CompassState extends State<Compass> with SingleTickerProviderStateMixin{
                     height: MediaQuery.of(context).size.height*0.5,
                     // child: _buildCompass()
                   child: CustomPaint(
-                      foregroundPainter: CompassPainter(angle: _heading),
+                      // foregroundPainter: CompassPainter(angle: _heading),
+                      foregroundPainter: CompassPainter(angle: GlobalData.directionToEnd),
                       child: Center(child: Text(_readout, style: _style))
                   )
                 ),

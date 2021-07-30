@@ -41,7 +41,7 @@ class _InputState extends State<Input> {
   void _showSnackBar(String msg) {
     final snackBar = SnackBar(
       content: Text(msg),
-      duration: Duration(seconds: 2),
+      duration: Duration(milliseconds: 500),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -114,7 +114,7 @@ class _InputState extends State<Input> {
   Widget build(BuildContext context) {
     return TextField(
       // inputFormatters: [maskFormatter],
-      keyboardType: TextInputType.datetime,
+      keyboardType: TextInputType.number,
       textInputAction: TextInputAction.done,
       controller: _myController,
       onSubmitted: (text) => print(_myController.text),

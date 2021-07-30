@@ -25,6 +25,9 @@ class LocationMarkerPlugin implements MapPlugin {
   /// For more details, see CenterFabExample.
   final Stream<double>? centerCurrentLocationStream;
 
+  /// The event stream dor setting zoom level. Use like centerCurrentLocationstream.
+  final Stream<double>? zoomLevelStream;
+
   ///The event stream for current heading angle
   final StreamController<double>? headingStreamController;
 
@@ -40,6 +43,7 @@ class LocationMarkerPlugin implements MapPlugin {
   const LocationMarkerPlugin({
     this.locationOptions = const LocationOptions(),
     this.centerCurrentLocationStream,
+    this.zoomLevelStream,
     this.headingStreamController,
     this.myPositionStreamController,
     this.centerOnLocationUpdate = CenterOnLocationUpdate.never,
@@ -159,6 +163,7 @@ class _LocationMarkerLayerState extends State<LocationMarkerLayer>
   Position? _currentPosition;
   late StreamSubscription<Position> _positionStreamSubscription;
   StreamSubscription<double>? _moveToCurrentStreamSubscription;
+  StreamSubscription<double>? _setZoomLevelStreamSubscription;
   AnimationController? _animationController;
 
   @override
@@ -202,6 +207,9 @@ class _LocationMarkerLayerState extends State<LocationMarkerLayer>
                 zoom);
           }
         });
+    _setZoomLevelStreamSubscription = widget.plugin.zoomLevelStream?.listen((double zoom) {
+      _moveMap(widget.map.getCenter(), zoom);
+    });
   }
 
   @override
